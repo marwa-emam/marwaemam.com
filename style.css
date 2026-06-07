@@ -45,6 +45,7 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   direction: rtl;
+  overflow-x: hidden;
 }
 
 body {
@@ -78,6 +79,21 @@ ul {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
+}
+
+/* Prevent any horizontal overflow globally */
+section,
+.hero,
+.about,
+.services,
+.universe-section,
+.testimonials,
+.gallery,
+.faq,
+.contact,
+.footer {
+  overflow-x: hidden;
 }
 
 .section-padding {
@@ -600,7 +616,7 @@ ul {
 .about-decoration {
   position: absolute;
   bottom: -20px;
-  left: -20px;
+  left: 0;
   width: 120px;
   height: 120px;
   border: 4px solid var(--gold-primary);
@@ -1678,12 +1694,17 @@ ul {
     height: 350px;
   }
 
+  .about-decoration {
+    display: none;
+  }
+
   .about-features {
     grid-template-columns: 1fr;
   }
 
   .stats-row {
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .services-grid {
@@ -1713,9 +1734,53 @@ ul {
   .testimonial-inner {
     padding: 32px 24px;
   }
+
+  .testimonials-slider {
+    overflow: hidden;
+  }
+
+  /* Prevent reveal animations from causing overflow */
+  .reveal-left,
+  .reveal-right {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .reveal-left.visible,
+  .reveal-right.visible {
+    transform: translateY(0);
+  }
+
+  .universe-point:hover {
+    transform: none;
+  }
+
+  .contact-method:hover {
+    transform: none;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .whatsapp-float {
+    bottom: 20px;
+    left: 20px;
+    width: 52px;
+    height: 52px;
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+
   .hero-title {
     font-size: 1.8rem;
   }
@@ -1732,8 +1797,29 @@ ul {
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .about-image-frame img {
-    height: 350px;
+    height: 300px;
+  }
+
+  .hero .container {
+    padding-top: 80px;
+    gap: 30px;
+  }
+
+  .hero-image img {
+    height: 280px;
+  }
+
+  .universe-section .container {
+    gap: 40px;
+  }
+
+  .contact .container {
+    gap: 40px;
+  }
+
+  .footer-text {
+    max-width: 100%;
   }
 }

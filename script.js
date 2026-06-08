@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initScrollReveal();
   initCounters();
-  initTestimonialsSlider();
+
   initHeroFloatingCards();
 });
 
@@ -275,101 +275,6 @@ function animateNumber(element, target) {
   requestAnimationFrame(update);
 }
 
-/* ============================================
-   TESTIMONIALS SLIDER
-   ============================================ */
-function initTestimonialsSlider() {
-  const track = document.getElementById('testimonialsTrack');
-  const dotsContainer = document.getElementById('sliderDots');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  
-  if (!track) return;
-
-  const cards = track.querySelectorAll('.testimonial-card');
-  const total = cards.length;
-  let current = 0;
-  let autoSlideInterval;
-
-  // Create dots
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement('button');
-    dot.classList.add('slider-dot');
-    dot.setAttribute('aria-label', `الشهادة ${i + 1}`);
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goTo(i));
-    dotsContainer.appendChild(dot);
-  }
-
-  function goTo(index) {
-    current = index;
-    // RTL: use positive translateX
-    track.style.transform = `translateX(${current * 100}%)`;
-    updateDots();
-  }
-
-  function updateDots() {
-    document.querySelectorAll('.slider-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === current);
-    });
-  }
-
-  function next() {
-    current = (current + 1) % total;
-    goTo(current);
-  }
-
-  function prev() {
-    current = (current - 1 + total) % total;
-    goTo(current);
-  }
-
-  nextBtn.addEventListener('click', () => {
-    next();
-    resetAutoSlide();
-  });
-
-  prevBtn.addEventListener('click', () => {
-    prev();
-    resetAutoSlide();
-  });
-
-  // Auto slide
-  function startAutoSlide() {
-    autoSlideInterval = setInterval(next, 5000);
-  }
-
-  function resetAutoSlide() {
-    clearInterval(autoSlideInterval);
-    startAutoSlide();
-  }
-
-  startAutoSlide();
-
-  // Touch/Swipe support
-  let startX = 0;
-  let isDragging = false;
-
-  track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-  });
-
-  track.addEventListener('touchend', (e) => {
-    if (!isDragging) return;
-    const diff = startX - e.changedTouches[0].clientX;
-    // RTL: swipe directions are reversed
-    if (Math.abs(diff) > 50) {
-      if (diff < 0) {
-        next();
-      } else {
-        prev();
-      }
-      resetAutoSlide();
-    }
-    isDragging = false;
-  });
-}
 
 /* ============================================
    HERO FLOATING CARDS ANIMATION

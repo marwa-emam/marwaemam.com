@@ -1588,6 +1588,37 @@ section,
     padding: 32px 24px;
   }
 
+  .contact-info {
+    text-align: center;
+  }
+
+  .contact-description {
+    text-align: center;
+  }
+
+  .contact-methods {
+    gap: 12px;
+  }
+
+  .contact-method {
+    padding: 14px;
+  }
+
+  .contact-method-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 1.2rem;
+  }
+
+  .contact-method h4 {
+    font-size: 0.9rem;
+  }
+
+  .contact-method p {
+    font-size: 0.8rem;
+  }
+
   .form-row {
     flex-direction: column;
     gap: 0;

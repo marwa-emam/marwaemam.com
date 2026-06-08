@@ -331,25 +331,35 @@ function handleFormSubmit(event) {
   event.preventDefault();
   
   const btn = document.getElementById('submitBtn');
-  const originalText = btn.textContent;
-  
-  btn.textContent = 'جاري الإرسال...';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const serviceEl = document.getElementById('service');
+  const serviceText = serviceEl.options[serviceEl.selectedIndex].text;
+  const serviceValue = serviceEl.value;
+  const message = document.getElementById('message').value.trim();
 
-  // Simulate sending
+  // Build WhatsApp message
+  let waMessage = `✨ رسالة جديدة من موقع marwaemam.com\n\n`;
+  waMessage += `👤 الاسم: ${name}\n`;
+  waMessage += `📞 الهاتف: ${phone}\n`;
+  if (email) waMessage += `📧 الإيميل: ${email}\n`;
+  if (serviceValue) waMessage += `🛎️ الخدمة: ${serviceText}\n`;
+  if (message) waMessage += `\n💬 الرسالة:\n${message}`;
+
+  // Open WhatsApp
+  const waUrl = `https://wa.me/201068076160?text=${encodeURIComponent(waMessage)}`;
+  window.open(waUrl, '_blank');
+
+  // Success feedback
+  btn.textContent = 'تم فتح الواتساب ✓';
+  btn.style.background = 'linear-gradient(135deg, #31A24C, #25862F)';
+  
   setTimeout(() => {
-    btn.textContent = 'تم الإرسال بنجاح ✓';
-    btn.style.background = 'linear-gradient(135deg, #31A24C, #25862F)';
-    
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.style.background = '';
-      document.getElementById('contactForm').reset();
-    }, 3000);
-  }, 1500);
+    btn.textContent = 'إرسال الرسالة ✨';
+    btn.style.background = '';
+    document.getElementById('contactForm').reset();
+  }, 3000);
 }
 
 /* ============================================
